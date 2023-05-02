@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow:
+        0px 0px 5.6px -20px rgba(0, 0, 0, 0.055),
+        0px 0px 11.7px -20px rgba(0, 0, 0, 0.111),
+        0px 0px 19.1px -20px rgba(0, 0, 0, 0.17),
+        0px 0px 28.9px -20px rgba(0, 0, 0, 0.235),
+        0px 0px 44.5px -20px rgba(0, 0, 0, 0.312),
+        0px 0px 100px -20px rgba(0, 0, 0, 0.56);
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #444;
+}
+
+.description {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #777;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 16px;
+    color: #444;
+}
+
+input[type="number"] {
+    width: 80px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #444;
+    text-align: center;
+}
+
+.btn {
+    width: 180px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #3e8e41;
+}
+
+.password-container {
+    text-align: center;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.password {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4CAF50;
+    word-wrap: break-word;
+    margin-top: 20px;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(83, 83, 83);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #000000;
+}

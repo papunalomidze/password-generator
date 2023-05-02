@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <title>Password Generator</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">Password Generator</h1>
+    <p class="description">Generate a random password with the options below:</p>
+    <form action="/" method="POST">
+      <label for="password-length">Password Length:</label>
+      <input type="number" name="length" id="password-length" value="{{ session['passwordLength'] or 8 }}">
+      
+      <label for="alphabet">Alphabet:</label>
+      <input type="checkbox" name="alpha" id="alphabet" checked>
+
+      <label for="numbers">Numbers:</label>
+      <input type="checkbox" name="numbers" id="numbers" checked>
+
+      <label for="symbols">Symbols:</label>
+      <input type="checkbox" name="symbol" id="symbols" checked>
+
+      <button type="submit" class="btn">Generate Password</button>
+    </form>
+
+    <div class="password-container">
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% else %}
+      <p class="password" id="password">{{ password }}</p>
+      <button type="button" class="btn" id="copy-btn">Copy to Clipboard</button>
+      {% endif %}
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
