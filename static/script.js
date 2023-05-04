@@ -1,3 +1,5 @@
+// script.js
+
 const passwordLengthInput = document.getElementById('password-length');
 const savedPasswordLength = sessionStorage.getItem('passwordLength');
 const password = document.getElementById('password');
@@ -61,16 +63,26 @@ symbolsCheckbox.addEventListener('change', () => {
     sessionStorage.setItem('SymbolsCheck', isChecked);
 });
 
-const alphaCheckbox = document.getElementById('alphabet');
-const savedAlpha = sessionStorage.getItem('AlphaCheck');
+const alphaCheckboxLower = document.getElementById('alphabet_lower');
+const savedAlphaLower = sessionStorage.getItem('AlphaCheckLower');
 
-if (savedAlpha === 'false') {
-    alphaCheckbox.checked = false;
+if (savedAlphaLower === 'false') {
+    alphaCheckboxLower.checked = false;
 }
 
-alphaCheckbox.addEventListener('change', () => {
-    const isChecked = alphaCheckbox.checked;
-    sessionStorage.setItem('AlphaCheck', isChecked);
+alphaCheckboxLower.addEventListener('change', () => {
+    const isChecked = alphaCheckboxLower.checked;
+    sessionStorage.setItem('AlphaCheckLower', isChecked);
 });
 
+const alphaCheckboxUpper = document.getElementById('alphabet_upper');
+const savedAlphaUpper = sessionStorage.getItem('AlphaCheckUpper');
 
+if (savedAlphaUpper === 'false') {
+    alphaCheckboxUpper.checked = false;
+}
+
+alphaCheckboxUpper.addEventListener('change', () => {
+    const isChecked = alphaCheckboxUpper.checked;
+    sessionStorage.setItem('AlphaCheckUpper', isChecked);
+});

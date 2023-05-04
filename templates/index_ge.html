@@ -1,0 +1,58 @@
+<!-- inex_ka.html -->
+
+<!DOCTYPE html>
+<html lang="ka">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>პაროლის გენერატორი</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="language-container">
+            <a href="/">ENG</a>
+            |
+            <a href="/geo">GEO</a>
+        </div>
+
+        <h1 class="title">პაროლის გენერატორი</h1>
+        <p class="description">შექმენი შემთხვევითი პაროლი შემდეგი პარამეტრებით:</p>
+        <form action='/geo' method="POST">
+            <label for="password-length">პაროლის სიგრძე:</label>
+            <input type="number" name="length" id="password-length" value="{{ session['passwordLength'] or 8 }}">
+
+            <label for="alphabet">დიდი ასოები</label>
+            <input type="checkbox" name="alpha_upper" id="alphabet_upper" checked>
+
+            <label for="alphabet">პატარა ასოები:</label>
+            <input type="checkbox" name="alpha_lower" id="alphabet_lower" checked>
+
+            <label for="numbers">ციფრები:</label>
+            <input type="checkbox" name="numbers" id="numbers" checked>
+
+            <label for="symbols">სიმბოლოები:</label>
+            <input type="checkbox" name="symbol" id="symbols" checked>
+
+            <button type="submit" class="btn">პაროლის გენერაცია</button>
+        </form>
+
+        <div class="password-container">
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% else %}
+            <p class="password" id="password">{{ password }}</p>
+            <button type="button" class="btn" id="copy-btn">კოპირება</button>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
