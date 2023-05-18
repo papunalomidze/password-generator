@@ -1,5 +1,4 @@
-<!-- index.html  -->
-
+<!-- index.html -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,40 +6,46 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <title>Password Generator</title>
 </head>
 
 <body>
   <div class="container">
+    
+    <div class="nav">
+      <div class="language-container">
+        <a href="/generate">ENG</a>
+        |
+        <a href="/geo">GEO</a>
+      </div>
 
-    <div class="language-container">
-      <a href="/">ENG</a>
-      |
-      <a href="/geo">GEO</a>
+      <a href="{{ url_for('logout') }}" class="logoutBtn">Logout</a>
+
     </div>
 
     <h1 class="title">Password Generator</h1>
     <p class="description">Generate a random password with the options below:</p>
-    <form action="/" method="POST">
+    <form action="/generate" method="POST">
       <label for="password-length">Password Length:</label>
       <input type="number" name="length" id="password-length" value="{{ session['passwordLength'] or 8 }}">
-      
-      <label for="alphabet">Upper case</label>
-      <input type="checkbox" name="alpha_upper" id="alphabet_upper" checked>
 
-      <label for="alphabet">Lower case:</label>
-      <input type="checkbox" name="alpha_lower" id="alphabet_lower" checked>
+      <label for="alphabet_upper">Upper case</label>
+      <input type="checkbox" name="alpha_upper" id="alphabet_upper">
+
+      <label for="alphabet_lower">Lower case:</label>
+      <input type="checkbox" name="alpha_lower" id="alphabet_lower">
 
       <label for="numbers">Numbers:</label>
-      <input type="checkbox" name="numbers" id="numbers" checked>
+      <input type="checkbox" name="numbers" id="numbers">
 
       <label for="symbols">Symbols:</label>
-      <input type="checkbox" name="symbol" id="symbols" checked>
+      <input type="checkbox" name="symbol" id="symbols">
 
-      <button type="submit" class="btn">Generate Password</button>
+      <button type="submit" class="btn" id="generate_btn">Generate Password</button>
     </form>
+
 
     <div class="password-container">
       {% if error %}

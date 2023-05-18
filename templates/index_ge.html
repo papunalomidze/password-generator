@@ -1,4 +1,4 @@
-<!-- inex_ka.html -->
+<!-- index_ge.html -->
 
 <!DOCTYPE html>
 <html lang="ka">
@@ -6,18 +6,22 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>პაროლის გენერატორი</title>
 </head>
 
 <body>
     <div class="container">
+        <div class="nav">
+            <div class="language-container">
+                <a href="/generate">ENG</a>
+                |
+                <a href="/geo">GEO</a>
+            </div>
+            
+            <a href="{{ url_for('logout') }}" class="logoutBtn">გამოსვლა</a>
 
-        <div class="language-container">
-            <a href="/">ENG</a>
-            |
-            <a href="/geo">GEO</a>
         </div>
 
         <h1 class="title">პაროლის გენერატორი</h1>
@@ -40,6 +44,8 @@
 
             <button type="submit" class="btn">პაროლის გენერაცია</button>
         </form>
+
+
 
         <div class="password-container">
             {% if error %}
