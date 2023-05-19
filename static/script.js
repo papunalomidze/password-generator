@@ -1,5 +1,3 @@
-// script.js
-
 const passwordLengthInput = document.getElementById('password-length');
 const savedPasswordLength = sessionStorage.getItem('passwordLength');
 const password = document.getElementById('password');

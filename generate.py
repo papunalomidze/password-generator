@@ -1,5 +1,3 @@
-# generate.py
-
 import secrets
 import string
 

@@ -1,15 +1,37 @@
-# db.py
+import mysql.connector
+from mysql.connector import Error
 
-import sqlite3
+def create_table():
+    try:
+        conn = mysql.connector.connect(
+            host='papuna.mysql.pythonanywhere-services.com',
+            user='papuna',
+            password='qwe123123',
+            database='papuna$users'
+        )
 
-def create_users_table():
-    conn = sqlite3.connect('users.db')
-    c = conn.cursor()
+        cursor = conn.cursor()
 
-    c.execute('''CREATE TABLE IF NOT EXISTS users
-                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  username TEXT UNIQUE,
-                  password TEXT)''')
+        create_table_query = """
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(255) NOT NULL,
+            password VARCHAR(255) NOT NULL
+        )
+        """
 
-    conn.commit()
-    conn.close()
+        cursor.execute(create_table_query)
+        conn.commit()
+
+        print("Table created successfully")
+
+    except Error as e:
+        print(e)
+
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+if __name__ == '__main__':
+    create_table()

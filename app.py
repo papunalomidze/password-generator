@@ -1,11 +1,10 @@
-# app.py
-
 from flask import Flask, session, render_template, redirect,url_for
 from auth import register, login, register_ge, login_ge
 from generator import generate_password, georgian
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'pass'
+app.secret_key = 'qwe123123'
+
 
 @app.route('/')
 def home():
@@ -43,4 +42,4 @@ def logout():
     return redirect(url_for('log'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

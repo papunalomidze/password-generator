@@ -1,8 +1,20 @@
-# auth.py
-
 from flask import render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
-import sqlite3
+import mysql.connector
+from mysql.connector import Error
+
+def create_connection():
+    try:
+        conn = mysql.connector.connect(
+            host='papuna.mysql.pythonanywhere-services.com',
+            user='papuna',
+            password='qwe123123',
+            database='papuna$users'
+        )
+        return conn
+    except Error as e:
+        print(e)
+        return None
 
 def register():
     if request.method == 'POST':
@@ -22,48 +34,56 @@ def register():
             error = 'Passwords do not match'
             return render_template('auth.html', auth_type='register', error=error)
 
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
+        conn = create_connection()
+        if conn:
+            cursor = conn.cursor()
 
-        c.execute('SELECT * FROM users WHERE username = ?', (username,))
-        user = c.fetchone()
+            cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+            user = cursor.fetchone()
 
-        if user:
-            error = 'Username already exists'
+            if user:
+                error = 'Username already exists'
+                conn.close()
+                return render_template('auth.html', auth_type='register', error=error)
+
+            hashed_password = generate_password_hash(password, method='sha256')
+
+            cursor.execute('INSERT INTO users (username, password) VALUES (%s, %s)', (username, hashed_password))
+            conn.commit()
             conn.close()
+
+            success = 'Account registered successfully'
+
+            return render_template('auth.html', auth_type='register', success=success)
+        else:
+            error = 'Failed to connect to the database'
             return render_template('auth.html', auth_type='register', error=error)
-
-        hashed_password = generate_password_hash(password, method='sha256')
-
-        c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
-        conn.commit()
-        conn.close()
-
-        success = 'Account registered successfully'
-
-        return render_template('auth.html', auth_type='register', success=success) 
     return render_template('auth.html', auth_type='register')
+
 
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
+        conn = create_connection()
+        if conn:
+            cursor = conn.cursor()
 
-        c.execute('SELECT * FROM users WHERE username = ?', (username,))
-        user = c.fetchone()
+            cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+            user = cursor.fetchone()
 
-        conn.close()
+            conn.close()
 
-        if user and check_password_hash(user[2], password):
-            session['username'] = username
-            return redirect(url_for('generate_pass'))
+            if user and check_password_hash(user[2], password):
+                session['username'] = username
+                return redirect(url_for('generate_pass'))
+            else:
+                error = 'Invalid username or password'
+                return render_template('auth.html', auth_type='login', error=error)
         else:
-            error = 'Invalid username or password'
+            error = 'Failed to connect to the database'
             return render_template('auth.html', auth_type='login', error=error)
-
     return render_template('auth.html', auth_type='login')
 
 
@@ -85,26 +105,30 @@ def register_ge():
             error = 'პაროლები არ ემთხვევა'
             return render_template('auth_ge.html', auth_type='register', error=error)
 
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
+        conn = create_connection()
+        if conn:
+            cursor = conn.cursor()
 
-        c.execute('SELECT * FROM users WHERE username = ?', (username,))
-        user = c.fetchone()
+            cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+            user = cursor.fetchone()
 
-        if user:
-            error = 'მომხმარებელი უკვე არსებობს'
+            if user:
+                error = 'მომხმარებელი უკვე არსებობს'
+                conn.close()
+                return render_template('auth_ge.html', auth_type='register', error=error)
+
+            hashed_password = generate_password_hash(password, method='sha256')
+
+            cursor.execute('INSERT INTO users (username, password) VALUES (%s, %s)', (username, hashed_password))
+            conn.commit()
             conn.close()
+
+            success = 'ანგარიში წარმატებით დარეგისტრირდა'
+
+            return render_template('auth_ge.html', auth_type='register', success=success)
+        else:
+            error = 'დაერეგისტრირებისას წარმოიშალოს კაპსლოკის შეცდომები'
             return render_template('auth_ge.html', auth_type='register', error=error)
-
-        hashed_password = generate_password_hash(password, method='sha256')
-
-        c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
-        conn.commit()
-        conn.close()
-
-        success = 'ანგარიში წარმატებით დარეგისტრირდა'
-
-        return render_template('auth_ge.html', auth_type='register', success=success) 
     return render_template('auth_ge.html', auth_type='register')
 
 
@@ -113,19 +137,22 @@ def login_ge():
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
+        conn = create_connection()
+        if conn:
+            cursor = conn.cursor()
 
-        c.execute('SELECT * FROM users WHERE username = ?', (username,))
-        user = c.fetchone()
+            cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+            user = cursor.fetchone()
 
-        conn.close()
+            conn.close()
 
-        if user and check_password_hash(user[2], password):
-            session['username'] = username
-            return redirect(url_for('generate_pass'))
+            if user and check_password_hash(user[2], password):
+                session['username'] = username
+                return redirect(url_for('generate_pass'))
+            else:
+                error = 'მომხმარებელის სახელი ან პაროლი არასწორია'
+                return render_template('auth_ge.html', auth_type='login', error=error)
         else:
-            error = 'მომხმარებელის სახელი ან პაროლი არასწორია'
+            error = 'დაერეგისტრირებისას წარმოიშალოს კაპსლოკის შეცდომები'
             return render_template('auth_ge.html', auth_type='login', error=error)
-
     return render_template('auth_ge.html', auth_type='login')

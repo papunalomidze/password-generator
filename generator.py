@@ -1,5 +1,3 @@
-# generator.py
-
 from flask import render_template, request
 import string
 from generate import generate
