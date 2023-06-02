@@ -6,7 +6,7 @@ def create_table():
         conn = mysql.connector.connect(
             host='papuna.mysql.pythonanywhere-services.com',
             user='papuna',
-            password='qwe123123',
+            password='PASSWORD',
             database='papuna$users'
         )
 
