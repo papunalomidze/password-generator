@@ -43,6 +43,12 @@
                     <input type="submit" name="submit" value="შესვლა">
                 </form>
             </div>
+
+            <div class="slide">
+                <h2>რეგისტრაცია</h2>
+                <p>რეგისტრაციისთვის დააკლიკეთ</p>
+            </div>
+
         </div>
         {% if error %}
         <p class="error">{{ error }}</p>
@@ -50,6 +56,8 @@
         <p class="success">{{ success }}</p>
         {% endif %}
     </div>
+
+    <script src="{{ url_for('static', filename='anim.js') }}"></script>
 </body>
 
 </html>
